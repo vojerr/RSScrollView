@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>34C6A32D-5D70-43F2-A7D2-EBA619CB7443</string>
+	<key>IDESourceControlProjectName</key>
+	<string>RSScrollView</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>82129055D38BC67C9BC602F10720870F93405C83</key>
+		<string>https://github.com/vojerr/RSScrollView.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>RSScrollView.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>82129055D38BC67C9BC602F10720870F93405C83</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/vojerr/RSScrollView.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>82129055D38BC67C9BC602F10720870F93405C83</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>82129055D38BC67C9BC602F10720870F93405C83</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RSScrollView</string>
+		</dict>
+	</array>
+</dict>
+</plist>
