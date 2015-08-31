@@ -26,11 +26,11 @@ public class RSScrollView : UIView {
             if newValue.height > bounds.size.height {
                 scrollState |= RSScrollViewScrolling.Vertical
             }
-            self.state = scrollState
-            self._contentSize = newValue
+            state = scrollState
+            _contentSize = newValue
         }
         get {
-            return self._contentSize
+            return _contentSize
         }
     }
 
@@ -73,7 +73,7 @@ public class RSScrollView : UIView {
     
     // MARK: UIPanGestureRecognizer actions
     func onTap(panRecognizer : UIPanGestureRecognizer) {
-        let updateBoundsAction = { (origin: CGPoint) -> Void in
+        let updateBoundsAction = { [unowned self] (origin: CGPoint) -> Void in
             self.bounds = CGRectMake(origin.x, origin.y, self.bounds.size.width, self.bounds.size.height)
         }
         switch panRecognizer.state {
@@ -97,7 +97,7 @@ public class RSScrollView : UIView {
             let velocityBehaviour = UIDynamicItemBehavior(items: [originItem])
             velocityBehaviour.addLinearVelocity(velocity, forItem: originItem)
             velocityBehaviour.resistance = 1.5
-            velocityBehaviour.action = { () -> Void in
+            velocityBehaviour.action = { [unowned self] () -> Void in
                 let (needSnap, anchor) = self.calculateSpring()
                 if (needSnap && self.attachBehaviour == nil) {
                     self.attachBehaviour = UIAttachmentBehavior(item: self.originItem, attachedToAnchor: anchor)
@@ -108,8 +108,13 @@ public class RSScrollView : UIView {
                     let pushBehaviour = UIDynamicItemBehavior(items: [self.originItem])
                     let pushVelocity = CGPointMake(self.originItem.center.x -  anchor.x, self.originItem.center.y - anchor.y)
                     pushBehaviour.addLinearVelocity(pushVelocity, forItem: self.originItem)
-                    pushBehaviour.action = { () -> Void in
+                    pushBehaviour.action = { [unowned self, unowned pushBehaviour] () -> Void in
                         updateBoundsAction(self.originItem.center)
+                        if (self.needToStopOscillation(origin: self.originItem.center, anchor: anchor)) {
+                            self.animator?.removeBehavior(self.attachBehaviour)
+                            self.animator?.removeBehavior(pushBehaviour)
+                            updateBoundsAction(anchor)
+                        }
                     }
                     
                     self.animator?.removeBehavior(velocityBehaviour)
@@ -123,6 +128,11 @@ public class RSScrollView : UIView {
         default:
             break
         }
+    }
+    
+    // MARK: Stop oscillation
+    func needToStopOscillation(origin current: CGPoint, anchor: CGPoint) -> Bool{
+        return sqrt(pow((current.x - anchor.x), 2.0) + pow((current.y - anchor.y), 2.0)) < 1.0;
     }
     
     // MARK: Rubber Calculations
