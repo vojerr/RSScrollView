@@ -16,6 +16,9 @@ public class RSScrollView : UIView {
         static let Vertical: UInt8 = 1 << 1
     }
     
+    private static let OscillationLimit: CGFloat = 2.0
+    private static let RubberResistance: CGFloat = 0.3
+    
     private var _contentSize: CGSize = CGSizeZero
     public var contentSize: CGSize {
         set {
@@ -130,9 +133,9 @@ public class RSScrollView : UIView {
         }
     }
     
-    // MARK: Stop oscillation
-    func needToStopOscillation(origin current: CGPoint, anchor: CGPoint) -> Bool{
-        return sqrt(pow((current.x - anchor.x), 2.0) + pow((current.y - anchor.y), 2.0)) < 1.0;
+    // MARK: Oscillation params
+    func needToStopOscillation(origin current: CGPoint, anchor: CGPoint) -> Bool {
+        return sqrt(pow((current.x - anchor.x), 2.0) + pow((current.y - anchor.y), 2.0)) < RSScrollView.OscillationLimit;
     }
     
     // MARK: Rubber Calculations
@@ -155,7 +158,7 @@ public class RSScrollView : UIView {
     func rubberValue(value : CGFloat, dimension : CGFloat, bound : CGFloat) -> CGFloat {
         let constrainedValue = constrainValue(value, dimension: dimension, bound: bound)
         let offset = value - constrainedValue
-        return constrainedValue + offset * CGFloat(0.3)
+        return constrainedValue + offset * RSScrollView.RubberResistance
     }
     
     // Mark: Spring Calculations
